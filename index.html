@@ -547,6 +547,7 @@
 
         <br />
         <button class="journal-clear-btn" onclick="clearTodayNotes()">Clear Today’s Notes</button>
+        <button class="journal-clear-btn" onclick="downloadJournal()">Download My Journal</button>
 
         <div style="margin:10px 0; border-top:1px solid #ecd7b7;"></div>
 
@@ -1222,6 +1223,44 @@
 
       if(textarea) textarea.value = data[todayKey] || "";
       populatePastDates(data);
+    }
+
+    function downloadJournal(){
+      const data = getJournalData();
+      const keys = Object.keys(data).sort();
+
+      if(keys.length === 0){
+        alert("No journal entries yet to download.");
+        return;
+      }
+
+      let content = "The Forget Me Not Dementia Digital Companion
+";
+      content += "Journal Entries
+";
+      content += "========================================
+
+";
+
+      keys.forEach(key => {
+        content += formatDateKey(key) + "
+";
+        content += "----------------------------------------
+";
+        content += data[key] + "
+
+";
+      });
+
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "forget-me-not-journal.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     setInterval(saveTodayNotes, 2000);
