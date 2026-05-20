@@ -381,6 +381,43 @@
     }
 
     @media (max-width:600px){
+    .splash-screen{
+  position:fixed;
+  inset:0;
+  background:#e9f5ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  transition:opacity 1s ease, visibility 1s ease;
+}
+
+.splash-content{
+  text-align:center;
+  color:#08354d;
+  padding:24px;
+}
+
+.splash-flower{
+  font-size:4rem;
+  margin-bottom:12px;
+}
+
+.splash-title{
+  font-size:1.4rem;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.splash-text{
+  font-size:.95rem;
+  color:#43778f;
+}
+
+.splash-hidden{
+  opacity:0;
+  visibility:hidden;
+} 
       body{
         align-items:stretch;
       }
@@ -437,6 +474,13 @@
 </head>
 
 <body>
+  <div id="splashScreen" class="splash-screen">
+  <div class="splash-content">
+    <div class="splash-flower">🌼</div>
+    <div class="splash-title">Forget Me Not</div>
+    <div class="splash-text">You are not alone</div>
+  </div>
+</div>
   <svg class="corner-flower" viewBox="0 0 100 100" aria-hidden="true">
     <circle cx="50" cy="20" r="14" fill="#6ea8ff"/>
     <circle cx="78" cy="40" r="14" fill="#6ea8ff"/>
@@ -1388,6 +1432,14 @@ function clearStoryDraft(){
       showDailyCarerTip();
       showDailyCarerQuote();
       loadJournalOnStart();
+      loadStoryDraft();
+
+setTimeout(() => {
+  const splash = document.getElementById("splashScreen");
+  if(splash){
+    splash.classList.add("splash-hidden");
+  }
+}, 1800);
       loadStoryDraft();
       showSection("companion");
     });
