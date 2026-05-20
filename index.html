@@ -466,6 +466,7 @@
       <button class="nav-btn" id="tabToolkit" onclick="showSection('toolkit')">Dementia Toolkit</button>
       <button class="nav-btn" id="tabLibrary" onclick="showSection('library')">Dementia Info Library</button>
       <button class="nav-btn" id="tabCrisis" onclick="showSection('crisis')">Crisis Help</button>
+      <button class="nav-btn" id="tabStories" onclick="showSection('stories')">Chat & Stories</button>
     </div>
 
     <!-- COMPANION -->
@@ -848,7 +849,57 @@
         </ul>
       </details>
     </div>
+<!-- CHAT & STORIES -->
+<div id="storiesSection" style="display:none;">
+  <div class="library-section-title">
+    🌼 Chat & Shared Stories
+  </div>
 
+  <p class="library-intro">
+    A gentle place for carers, families, and people affected by dementia to write a reflection, share an experience, or reach out for a chat.
+  </p>
+
+  <p class="library-note">
+    This is a private first step. Stories are not posted publicly. They stay on the person’s device unless they choose to email them.
+  </p>
+
+  <details open>
+    <summary><span class="summary-label">Need to chat? <span class="summary-badge">Private email</span></span></summary>
+    <p>
+      If you would like to talk, you can use the button below to send an email.
+    </p>
+
+    <a class="journal-clear-btn" href="mailto:your-email@example.com?subject=Forget%20Me%20Not%20Companion%20-%20I%20would%20like%20to%20chat">
+      Email Odette
+    </a>
+  </details>
+
+  <details>
+    <summary><span class="summary-label">Share your story <span class="summary-badge">Draft first</span></span></summary>
+    <p>
+      You can write your story or reflection here. It will save only on this device unless you choose to email it.
+    </p>
+
+    <textarea id="storyText" class="journal-textarea"
+      placeholder="Write your story, reflection, or experience here..."></textarea>
+
+    <br />
+    <button class="journal-clear-btn" onclick="saveStoryDraft()">Save Story Draft</button>
+    <button class="journal-clear-btn" onclick="emailStory()">Email My Story</button>
+    <button class="journal-clear-btn" onclick="clearStoryDraft()">Clear Story Draft</button>
+
+    <div id="savedStoryDisplay" class="journal-past-display">
+      No story draft saved yet.
+    </div>
+  </details>
+
+  <details>
+    <summary><span class="summary-label">Before stories are shared publicly <span class="summary-badge">Consent</span></span></summary>
+    <p>
+      Stories should only ever be shared publicly with clear consent. Names, locations, medical details, and identifying information should be removed unless the person has specifically agreed.
+    </p>
+  </details>
+</div>
     <!-- CRISIS HELP -->
     <div id="crisisSection" style="display:none;">
       <div class="library-section-title">
@@ -912,23 +963,27 @@
       const tool = document.getElementById("toolkitSection");
       const lib = document.getElementById("librarySection");
       const crisis = document.getElementById("crisisSection");
+      const stories = document.getElementById("storiesSection");
 
       const tabComp = document.getElementById("tabCompanion");
       const tabTool = document.getElementById("tabToolkit");
       const tabLib = document.getElementById("tabLibrary");
       const tabCrisis = document.getElementById("tabCrisis");
+      const tabStories = document.getElementById("tabStories");
 
-      if(!comp || !tool || !lib || !crisis || !tabComp || !tabTool || !tabLib || !tabCrisis) return;
+      if(!comp || !tool || !lib || !crisis || !stories || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories) return;
 
       comp.style.display = "none";
       tool.style.display = "none";
       lib.style.display = "none";
       crisis.style.display = "none";
+      stories.style.display = "none";
 
       tabComp.classList.remove("nav-btn-active");
       tabTool.classList.remove("nav-btn-active");
       tabLib.classList.remove("nav-btn-active");
       tabCrisis.classList.remove("nav-btn-active");
+      tabStories.classList.remove("nav-btn-active");
 
       if(section === "toolkit"){
         tool.style.display = "block";
@@ -939,6 +994,9 @@
       } else if(section === "crisis"){
         crisis.style.display = "block";
         tabCrisis.classList.add("nav-btn-active");
+        } else if(section === "stories"){
+  stories.style.display = "block";
+  tabStories.classList.add("nav-btn-active");
       } else {
         comp.style.display = "block";
         tabComp.classList.add("nav-btn-active");
@@ -1114,6 +1172,7 @@
     }
 
     const JOURNAL_KEY = "forgetMeNot_journal";
+    const STORY_KEY = "forgetMeNot_storyDraft";
 
     function getTodayKey(){
       const d = new Date();
@@ -1258,12 +1317,77 @@ function downloadJournal(){
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+    function loadStoryDraft(){
+  const storyText = document.getElementById("storyText");
+  const display = document.getElementById("savedStoryDisplay");
+  const saved = localStorage.getItem(STORY_KEY) || "";
+
+  if(storyText) storyText.value = saved;
+  if(display){
+    display.textContent = saved.trim() ? saved : "No story draft saved yet.";
+  }
+}
+
+function saveStoryDraft(){
+  const storyText = document.getElementById("storyText");
+  const display = document.getElementById("savedStoryDisplay");
+
+  if(!storyText || !display) return;
+
+  const text = storyText.value.trim();
+
+  if(!text){
+    alert("Write a short story or reflection first.");
+    return;
+  }
+
+  localStorage.setItem(STORY_KEY, text);
+  display.textContent = text;
+  alert("Story draft saved on this device.");
+}
+
+function emailStory(){
+  const storyText = document.getElementById("storyText");
+
+  if(!storyText) return;
+
+  const text = storyText.value.trim();
+
+  if(!text){
+    alert("Write a short story or reflection first.");
+    return;
+  }
+
+  localStorage.setItem(STORY_KEY, text);
+
+  const subject = encodeURIComponent("Forget Me Not Companion - Shared Story");
+  const body = encodeURIComponent(
+    "Hello Odette,\n\nI would like to share this reflection/story:\n\n" +
+    text +
+    "\n\nPlease contact me before sharing this publicly.\n\nName:\nPreferred contact details:\n"
+  );
+
+  window.location.href = "mailto:your-email@example.com?subject=" + subject + "&body=" + body;
+}
+
+function clearStoryDraft(){
+  if(!confirm("Are you sure you want to clear this story draft from this device?")) return;
+
+  const storyText = document.getElementById("storyText");
+  const display = document.getElementById("savedStoryDisplay");
+
+  localStorage.removeItem(STORY_KEY);
+
+  if(storyText) storyText.value = "";
+  if(display) display.textContent = "No story draft saved yet.";
+}
     setInterval(saveTodayNotes, 2000);
 
     window.addEventListener("load", () => {
       showDailyCarerTip();
       showDailyCarerQuote();
       loadJournalOnStart();
+      loadStoryDraft();
       showSection("companion");
     });
   </script>
