@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>The Forget Me Not Dementia Digital Companion</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c6c8b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Forget Me Not" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
   <style>
     body{
@@ -379,6 +383,68 @@
       color:#2a4b5a;
     }
 
+    .support-card{
+      margin-bottom:12px;
+      padding:14px 16px;
+      border-radius:12px;
+      background:#f7fbfc;
+      border:1px solid #d0e3ec;
+      color:#3a4a52;
+      font-size:.9rem;
+      line-height:1.5;
+    }
+
+    .support-card h3{
+      margin:0 0 8px 0;
+      color:#08354d;
+      font-size:1rem;
+    }
+
+    .support-button-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .support-link{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#0c6c8b;
+      color:#fff;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:.9rem;
+    }
+
+    .support-link-soft{
+      background:#e5f2f6;
+      color:#0c6c8b;
+    }
+
+    .story-box{
+      width:100%;
+      min-height:110px;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #c3d7e0;
+      font-size:.9rem;
+      resize:vertical;
+      box-sizing:border-box;
+      margin-top:8px;
+    }
+
+    .story-display{
+      white-space:pre-wrap;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #d0e3ec;
+      background:#fff;
+      min-height:50px;
+      margin-top:10px;
+    }
+
     @media (max-width:600px){
       body{
         align-items:stretch;
@@ -466,6 +532,7 @@
       <button class="nav-btn" id="tabToolkit" onclick="showSection('toolkit')">Dementia Toolkit</button>
       <button class="nav-btn" id="tabLibrary" onclick="showSection('library')">Dementia Info Library</button>
       <button class="nav-btn" id="tabCrisis" onclick="showSection('crisis')">Crisis Help</button>
+      <button class="nav-btn" id="tabSupport" onclick="showSection('support')">Chat & Stories</button>
     </div>
 
     <!-- COMPANION -->
@@ -849,6 +916,64 @@
       </details>
     </div>
 
+    <!-- CHAT & STORIES -->
+    <div id="supportSection" style="display:none;">
+      <div class="library-section-title">
+        <svg class="flower-small" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="20" r="14" fill="#6ea8ff"/><circle cx="78" cy="40" r="14" fill="#6ea8ff"/>
+          <circle cx="68" cy="72" r="14" fill="#6ea8ff"/><circle cx="32" cy="72" r="14" fill="#6ea8ff"/>
+          <circle cx="22" cy="40" r="14" fill="#6ea8ff"/><circle cx="50" cy="46" r="10" fill="#ffe28a"/>
+          <circle cx="50" cy="46" r="4" fill="#f5c04f"/>
+        </svg>
+        Chat & Shared Stories
+      </div>
+
+      <p class="library-intro">
+        A gentle place for carers and families to reach out, share reflections, and feel less alone. This is not a crisis service, but it can be a first step towards connection.
+      </p>
+
+      <div class="support-card">
+        <h3>Need to chat?</h3>
+        <p>
+          If someone would like to speak with you, this button can open an email so they can get in touch directly.
+          Replace the email address in the code with your preferred Altriss or support email before sharing widely.
+        </p>
+        <div class="support-button-row">
+          <a class="support-link" href="mailto:your-email@example.com?subject=Forget%20Me%20Not%20Dementia%20Companion%20-%20I%20would%20like%20to%20chat">Email Odette</a>
+          <a class="support-link support-link-soft" href="#crisisSection" onclick="showSection('crisis')">I need urgent support</a>
+        </div>
+      </div>
+
+      <div class="support-card">
+        <h3>Share your story</h3>
+        <p>
+          People can write a short reflection here first. This stays on their own device unless they choose to email it to you.
+          This is safer than posting straight onto a public wall because you can check consent, remove personal details, and decide what is appropriate to share.
+        </p>
+
+        <label for="storyText">Your reflection or experience:</label>
+        <textarea id="storyText" class="story-box" placeholder="Write your story, reflection, or experience here..."></textarea>
+
+        <div class="support-button-row">
+          <button class="btn-main" onclick="saveStoryDraft()">Save Story Draft</button>
+          <button class="btn-soft" onclick="emailStory()">Email My Story</button>
+          <button class="btn-soft" onclick="clearStoryDraft()">Clear Story Draft</button>
+        </div>
+
+        <div class="story-display" id="savedStoryDisplay">
+          No story draft saved yet.
+        </div>
+      </div>
+
+      <div class="support-card">
+        <h3>Important note before sharing stories publicly</h3>
+        <p>
+          Before putting anyone’s story on a public page, always get clear consent, remove names or identifying details unless they have specifically agreed, and avoid sharing private medical information.
+          A moderated approach protects everyone and keeps this space kind, safe, and respectful.
+        </p>
+      </div>
+    </div>
+
     <!-- CRISIS HELP -->
     <div id="crisisSection" style="display:none;">
       <div class="library-section-title">
@@ -912,23 +1037,27 @@
       const tool = document.getElementById("toolkitSection");
       const lib = document.getElementById("librarySection");
       const crisis = document.getElementById("crisisSection");
+      const support = document.getElementById("supportSection");
 
       const tabComp = document.getElementById("tabCompanion");
       const tabTool = document.getElementById("tabToolkit");
       const tabLib = document.getElementById("tabLibrary");
       const tabCrisis = document.getElementById("tabCrisis");
+      const tabSupport = document.getElementById("tabSupport");
 
-      if(!comp || !tool || !lib || !crisis || !tabComp || !tabTool || !tabLib || !tabCrisis) return;
+      if(!comp || !tool || !lib || !crisis || !support || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabSupport) return;
 
       comp.style.display = "none";
       tool.style.display = "none";
       lib.style.display = "none";
       crisis.style.display = "none";
+      support.style.display = "none";
 
       tabComp.classList.remove("nav-btn-active");
       tabTool.classList.remove("nav-btn-active");
       tabLib.classList.remove("nav-btn-active");
       tabCrisis.classList.remove("nav-btn-active");
+      tabSupport.classList.remove("nav-btn-active");
 
       if(section === "toolkit"){
         tool.style.display = "block";
@@ -939,6 +1068,9 @@
       } else if(section === "crisis"){
         crisis.style.display = "block";
         tabCrisis.classList.add("nav-btn-active");
+      } else if(section === "support"){
+        support.style.display = "block";
+        tabSupport.classList.add("nav-btn-active");
       } else {
         comp.style.display = "block";
         tabComp.classList.add("nav-btn-active");
@@ -1114,6 +1246,7 @@
     }
 
     const JOURNAL_KEY = "forgetMeNot_journal";
+    const STORY_KEY = "forgetMeNot_storyDraft";
 
     function getTodayKey(){
       const d = new Date();
@@ -1263,12 +1396,83 @@
       URL.revokeObjectURL(url);
     }
 
+    function loadStoryDraft(){
+      const storyText = document.getElementById("storyText");
+      const display = document.getElementById("savedStoryDisplay");
+      const saved = localStorage.getItem(STORY_KEY) || "";
+
+      if(storyText) storyText.value = saved;
+      if(display){
+        display.textContent = saved.trim() ? saved : "No story draft saved yet.";
+      }
+    }
+
+    function saveStoryDraft(){
+      const storyText = document.getElementById("storyText");
+      const display = document.getElementById("savedStoryDisplay");
+      if(!storyText || !display) return;
+
+      const text = storyText.value.trim();
+      if(!text){
+        alert("Write a short story or reflection first.");
+        return;
+      }
+
+      localStorage.setItem(STORY_KEY, text);
+      display.textContent = text;
+      alert("Story draft saved on this device.");
+    }
+
+    function emailStory(){
+      const storyText = document.getElementById("storyText");
+      if(!storyText) return;
+
+      const text = storyText.value.trim();
+      if(!text){
+        alert("Write a short story or reflection first.");
+        return;
+      }
+
+      localStorage.setItem(STORY_KEY, text);
+
+      const subject = encodeURIComponent("Forget Me Not Dementia Companion - Shared Story");
+      const body = encodeURIComponent(
+        "Hello Odette,
+
+I would like to share this reflection/story:
+
+" +
+        text +
+        "
+
+Please contact me before sharing this publicly.
+
+Name:
+Preferred contact details:
+"
+      );
+
+      window.location.href = "mailto:your-email@example.com?subject=" + subject + "&body=" + body;
+    }
+
+    function clearStoryDraft(){
+      if(!confirm("Are you sure you want to clear this story draft from this device?")) return;
+
+      const storyText = document.getElementById("storyText");
+      const display = document.getElementById("savedStoryDisplay");
+      localStorage.removeItem(STORY_KEY);
+
+      if(storyText) storyText.value = "";
+      if(display) display.textContent = "No story draft saved yet.";
+    }
+
     setInterval(saveTodayNotes, 2000);
 
     window.addEventListener("load", () => {
       showDailyCarerTip();
       showDailyCarerQuote();
       loadJournalOnStart();
+      loadStoryDraft();
       showSection("companion");
     });
   </script>
