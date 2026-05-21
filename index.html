@@ -1295,57 +1295,57 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
   </div>
 
   <script>
-    function showSection(section){
-      const comp = document.getElementById("companionSection");
-      const tool = document.getElementById("toolkitSection");
-      const lib = document.getElementById("librarySection");
-      const crisis = document.getElementById("crisisSection");
-      const stories = document.getElementById("storiesSection");
-      const community = document.getElementById("communitySection");
+   function showSection(section){
+  const comp = document.getElementById("companionSection");
+  const tool = document.getElementById("toolkitSection");
+  const lib = document.getElementById("librarySection");
+  const crisis = document.getElementById("crisisSection");
+  const stories = document.getElementById("storiesSection");
+  const community = document.getElementById("communitySection");
 
-      const tabComp = document.getElementById("tabCompanion");
-      const tabTool = document.getElementById("tabToolkit");
-      const tabLib = document.getElementById("tabLibrary");
-      const tabCrisis = document.getElementById("tabCrisis");
-      const tabStories = document.getElementById("tabStories");
-      const tabCommunity = document.getElementById("tabCommunity");
+  const tabComp = document.getElementById("tabCompanion");
+  const tabTool = document.getElementById("tabToolkit");
+  const tabLib = document.getElementById("tabLibrary");
+  const tabCrisis = document.getElementById("tabCrisis");
+  const tabStories = document.getElementById("tabStories");
+  const tabCommunity = document.getElementById("tabCommunity");
 
-      if(!comp || !tool || !lib || !crisis || !stories || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories) return;
+  if(!comp || !tool || !lib || !crisis || !stories || !community || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories || !tabCommunity) return;
 
-      comp.style.display = "none";
-      tool.style.display = "none";
-      lib.style.display = "none";
-      crisis.style.display = "none";
-      stories.style.display = "none";
-      community.style.display = "none";
+  comp.style.display = "none";
+  tool.style.display = "none";
+  lib.style.display = "none";
+  crisis.style.display = "none";
+  stories.style.display = "none";
+  community.style.display = "none";
 
-      tabComp.classList.remove("nav-btn-active");
-      tabTool.classList.remove("nav-btn-active");
-      tabLib.classList.remove("nav-btn-active");
-      tabCrisis.classList.remove("nav-btn-active");
-      tabStories.classList.remove("nav-btn-active");
-      tabCommunity.classList.remove("nav-btn-active");
+  tabComp.classList.remove("nav-btn-active");
+  tabTool.classList.remove("nav-btn-active");
+  tabLib.classList.remove("nav-btn-active");
+  tabCrisis.classList.remove("nav-btn-active");
+  tabStories.classList.remove("nav-btn-active");
+  tabCommunity.classList.remove("nav-btn-active");
 
-      if(section === "toolkit"){
-        tool.style.display = "block";
-        tabTool.classList.add("nav-btn-active");
-      } else if(section === "library"){
-        lib.style.display = "block";
-        tabLib.classList.add("nav-btn-active");
-      } else if(section === "crisis"){
-        crisis.style.display = "block";
-        tabCrisis.classList.add("nav-btn-active");
-        } else if(section === "stories"){
-  stories.style.display = "block";
-  tabStories.classList.add("nav-btn-active");
-      } else {
-        comp.style.display = "block";
-        tabComp.classList.add("nav-btn-active");
-      }
-      } else if(section === "community"){
-  community.style.display = "block";
-  tabCommunity.classList.add("nav-btn-active");
-    }
+  if(section === "toolkit"){
+    tool.style.display = "block";
+    tabTool.classList.add("nav-btn-active");
+  } else if(section === "library"){
+    lib.style.display = "block";
+    tabLib.classList.add("nav-btn-active");
+  } else if(section === "crisis"){
+    crisis.style.display = "block";
+    tabCrisis.classList.add("nav-btn-active");
+  } else if(section === "stories"){
+    stories.style.display = "block";
+    tabStories.classList.add("nav-btn-active");
+  } else if(section === "community"){
+    community.style.display = "block";
+    tabCommunity.classList.add("nav-btn-active");
+  } else {
+    comp.style.display = "block";
+    tabComp.classList.add("nav-btn-active");
+  }
+}
 
     const prompts = {
       school: [
