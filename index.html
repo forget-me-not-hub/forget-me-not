@@ -280,6 +280,27 @@
       font-size:.9rem;
       box-sizing:border-box;
     }
+    .story-prompts-box{
+  margin-top:12px;
+}
+
+.story-soft-intro{
+  font-size:.92rem;
+  color:#5f6f77;
+  line-height:1.6;
+  margin-bottom:14px;
+}
+
+.story-prompt{
+  background:#f7fbfc;
+  border:1px solid #d7e7ef;
+  border-radius:12px;
+  padding:10px 12px;
+  margin-bottom:8px;
+  font-size:.9rem;
+  color:#36505d;
+  line-height:1.5;
+}
 
     .flower-small{
       width:22px;
@@ -934,8 +955,37 @@
       You can write your story or reflection here. It will save only on this device unless you choose to email it.
     </p>
 
-    <textarea id="storyText" class="journal-textarea"
-      placeholder="Write your story, reflection, or experience here..."></textarea>
+    <div class="story-prompts-box">
+
+  <p class="story-soft-intro">
+    You do not need to have the “right words” here.  
+    This space is simply for you.
+  </p>
+
+  <div class="story-prompt">
+    💛 What has today felt like for you?
+  </div>
+
+  <div class="story-prompt">
+    🌿 What is one moment that stayed with you today?
+  </div>
+
+  <div class="story-prompt">
+    🤍 Is there something you wish someone understood?
+  </div>
+
+  <div class="story-prompt">
+    🌧 What has felt difficult recently?
+  </div>
+
+  <div class="story-prompt">
+    🌼 What has helped, even a little?
+  </div>
+
+  <textarea id="storyText" class="journal-textarea"
+    placeholder="You can write freely here... even a few words are enough."></textarea>
+
+</div>
 
     <br />
     <button class="journal-clear-btn" onclick="saveStoryDraft()">Save Story Draft</button>
