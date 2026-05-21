@@ -686,6 +686,7 @@ body.dark-mode .community-post-text{
       <button class="nav-btn" id="tabStories" onclick="showSection('stories')">Chat & Stories</button>
       <button class="nav-btn" id="tabCommunity" onclick="showSection('community')">🌼 Community Corner</button>
       <button class="nav-btn" id="tabCalm" onclick="showSection('calm')">🎧 Calm Corner</button>
+      <button class="nav-btn" id="tabStoriesWall" onclick="showSection('storieswall')">📖 Stories Wall</button>
     </div>
 
     <!-- COMPANION -->
@@ -1321,6 +1322,77 @@ You’re doing more than you realise 🌼
   </div>
 
 </div>
+    <!-- MEMORY STORIES WALL -->
+<div id="storieswallSection" style="display:none;">
+
+  <div class="library-section-title">
+    📖 Memory Stories Wall
+  </div>
+
+  <p class="soft-support-text">
+    Shared moments, reflections, and experiences from people walking similar paths 💙
+  </p>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🌿 Anonymous Story
+    </div>
+
+    <div class="community-post-text">
+      Mum forgot my name today.
+      <br><br>
+      I smiled and gently reminded her who I was, but later I cried in the kitchen where nobody could see.
+      <br><br>
+      Dementia can be heartbreaking and beautiful in the same breath.
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      💛 Shared Memory
+    </div>
+
+    <div class="community-post-text">
+      Dad barely spoke most of the afternoon.
+      <br><br>
+      Then Vera Lynn started playing and suddenly he sang every single word.
+      <br><br>
+      Music reaches places dementia cannot always touch.
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🌼 Gentle Truth
+    </div>
+
+    <div class="community-post-text">
+      Sometimes carers look “fine” because they’ve become experts at surviving difficult days quietly.
+    </div>
+
+  </div>
+
+  <details>
+    <summary>
+      <span class="summary-label">
+        Sharing stories safely
+        <span class="summary-badge">Consent & privacy</span>
+      </span>
+    </summary>
+
+    <p>
+      Stories shared publicly should always protect privacy and dignity.
+      Names, locations, and identifying details should only be included with clear consent.
+    </p>
+
+  </details>
+
+</div>
     <!-- CRISIS HELP -->
     <div id="crisisSection" style="display:none;">
       <div class="library-section-title">
@@ -1390,6 +1462,7 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
   const stories = document.getElementById("storiesSection");
   const community = document.getElementById("communitySection");
      const calm = document.getElementById("calmSection");
+     const storieswall = document.getElementById("storieswallSection");
 
   const tabComp = document.getElementById("tabCompanion");
   const tabTool = document.getElementById("tabToolkit");
@@ -1398,8 +1471,9 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
   const tabStories = document.getElementById("tabStories");
   const tabCommunity = document.getElementById("tabCommunity");
      const tabCalm = document.getElementById("tabCalm");
+     const tabStoriesWall = document.getElementById("tabStoriesWall");
 
- if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories || !tabCommunity || !tabCalm) return;
+if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !storieswall || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories || !tabCommunity || !tabCalm || !tabStoriesWall) return;
 
   comp.style.display = "none";
   tool.style.display = "none";
@@ -1408,6 +1482,7 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
   stories.style.display = "none";
   community.style.display = "none";
      calm.style.display = "none";
+     storieswall.style.display = "none";
 
   tabComp.classList.remove("nav-btn-active");
   tabTool.classList.remove("nav-btn-active");
@@ -1415,7 +1490,8 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
   tabCrisis.classList.remove("nav-btn-active");
   tabStories.classList.remove("nav-btn-active");
   tabCommunity.classList.remove("nav-btn-active");
-   tabCalm.classList.remove("nav-btn-active");  
+   tabCalm.classList.remove("nav-btn-active");
+     tabStoriesWall.classList.remove("nav-btn-active");
 
   if(section === "toolkit"){
     tool.style.display = "block";
@@ -1435,6 +1511,9 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
    } else if(section === "calm"){
   calm.style.display = "block";
   tabCalm.classList.add("nav-btn-active"); 
+   } else if(section === "storieswall"){
+  storieswall.style.display = "block";
+  tabStoriesWall.classList.add("nav-btn-active"); 
   } else {
     comp.style.display = "block";
     tabComp.classList.add("nav-btn-active");
