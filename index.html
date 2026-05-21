@@ -17,6 +17,108 @@
       align-items:flex-start;
       min-height:100vh;
     }
+ body.dark-mode{
+  background:#10232f;
+  color:#edf6fb;
+}
+
+body.dark-mode .app{
+  background:#182f3d;
+  border-color:#5f8fb5;
+  box-shadow:0 4px 18px rgba(0,0,0,.35);
+}
+
+body.dark-mode .fm-header{
+  background:#203f52;
+  border-color:#5f8fb5;
+}
+
+body.dark-mode .fm-header-title,
+body.dark-mode label,
+body.dark-mode .toolkit-section-title,
+body.dark-mode .library-section-title,
+body.dark-mode .journal-heading,
+body.dark-mode .journal-subheading{
+  color:#edf6fb;
+}
+
+body.dark-mode .fm-header-subtitle,
+body.dark-mode .note,
+body.dark-mode .footer-note,
+body.dark-mode .toolkit-intro,
+body.dark-mode .library-intro,
+body.dark-mode .toolkit-note,
+body.dark-mode .library-note,
+body.dark-mode .soft-support-text{
+  color:#c8dbe5;
+}
+
+body.dark-mode .nav-btn{
+  background:#27495c;
+  color:#edf6fb;
+  border-color:#6fa8cf;
+}
+
+body.dark-mode .nav-btn-active{
+  background:#6ea8ff;
+  color:#10232f;
+  border-color:#6ea8ff;
+}
+
+body.dark-mode .prompt-box,
+body.dark-mode details,
+body.dark-mode .journal-past-display,
+body.dark-mode .story-prompt{
+  background:#223f50;
+  border-color:#5f8fb5;
+  color:#edf6fb;
+}
+
+body.dark-mode details p,
+body.dark-mode details ul,
+body.dark-mode details li{
+  color:#dbeaf0;
+}
+
+body.dark-mode summary{
+  color:#edf6fb;
+}
+
+body.dark-mode .journal-box{
+  background:#2c3b42;
+  border-color:#8ca0a9;
+  color:#edf6fb;
+}
+
+body.dark-mode .carer-tip-box{
+  background:#1f3f35;
+  border-color:#6aa487;
+  color:#e8fff4;
+}
+
+body.dark-mode .carer-quote-box{
+  background:#352947;
+  border-color:#8e77ad;
+  color:#f4ecff;
+}
+
+body.dark-mode textarea,
+body.dark-mode select,
+body.dark-mode .guided-journal-textarea{
+  background:#10232f;
+  color:#edf6fb;
+  border-color:#6fa8cf;
+}
+
+body.dark-mode textarea::placeholder{
+  color:#aac1cc;
+}
+
+body.dark-mode .journal-clear-btn,
+body.dark-mode .btn-soft{
+  background:#33586d;
+  color:#edf6fb;
+}
 
     .app{
       background:#fff;
@@ -542,6 +644,7 @@
     </div>
 
     <div class="nav-tabs">
+     <button class="nav-btn" id="darkModeBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
       <button class="nav-btn nav-btn-active" id="tabCompanion" onclick="showSection('companion')">Companion</button>
       <button class="nav-btn" id="tabToolkit" onclick="showSection('toolkit')">Dementia Toolkit</button>
       <button class="nav-btn" id="tabLibrary" onclick="showSection('library')">Dementia Info Library</button>
@@ -1319,6 +1422,7 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
     }
 
     const JOURNAL_KEY = "forgetMeNot_journal";
+    const DARK_MODE_KEY = "forgetMeNot_darkMode";
     const STORY_KEY = "forgetMeNot_storyDraft";
 
     function getTodayKey(){
@@ -1528,12 +1632,28 @@ function clearStoryDraft(){
   if(storyText) storyText.value = "";
   if(display) display.textContent = "No story draft saved yet.";
 }
+    function applyDarkModeSetting(){
+  const darkModeOn = localStorage.getItem(DARK_MODE_KEY) === "on";
+  document.body.classList.toggle("dark-mode", darkModeOn);
+
+  const btn = document.getElementById("darkModeBtn");
+  if(btn){
+    btn.textContent = darkModeOn ? "☀️ Light Mode" : "🌙 Dark Mode";
+  }
+}
+
+function toggleDarkMode(){
+  const isCurrentlyDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem(DARK_MODE_KEY, isCurrentlyDark ? "off" : "on");
+  applyDarkModeSetting();
+}
     setInterval(saveTodayNotes, 2000);
 
     window.addEventListener("load", () => {
       showDailyCarerTip();
       showDailyCarerQuote();
       loadJournalOnStart();
+      applyDarkModeSetting();
       loadStoryDraft();
 
 setTimeout(() => {
