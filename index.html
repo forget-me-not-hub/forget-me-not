@@ -605,6 +605,40 @@ body.dark-mode .btn-soft{
         height:140px;
       }
     }
+   .community-post{
+  background:#f8fcff;
+  border:1px solid #d9e9f2;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+
+.community-post-title{
+  font-size:1rem;
+  font-weight:700;
+  color:#295166;
+  margin-bottom:10px;
+}
+
+.community-post-text{
+  font-size:.95rem;
+  line-height:1.7;
+  color:#48616d;
+}
+
+body.dark-mode .community-post{
+  background:#223846;
+  border-color:#5e89a5;
+}
+
+body.dark-mode .community-post-title{
+  color:#edf6fb;
+}
+
+body.dark-mode .community-post-text{
+  color:#d6e6ee;
+} 
   </style>
 </head>
 
@@ -650,6 +684,7 @@ body.dark-mode .btn-soft{
       <button class="nav-btn" id="tabLibrary" onclick="showSection('library')">Dementia Info Library</button>
       <button class="nav-btn" id="tabCrisis" onclick="showSection('crisis')">Crisis Help</button>
       <button class="nav-btn" id="tabStories" onclick="showSection('stories')">Chat & Stories</button>
+      <button class="nav-btn" id="tabCommunity" onclick="showSection('community')">🌼 Community Corner</button>
     </div>
 
     <!-- COMPANION -->
@@ -1147,6 +1182,58 @@ You’re doing more than you realise 🌼
     </p>
   </details>
 </div>
+    <!-- COMMUNITY CORNER -->
+<div id="communitySection" style="display:none;">
+
+  <div class="library-section-title">
+    🌼 Community Corner
+  </div>
+
+  <p class="soft-support-text">
+    A gentle space for reflections, encouragement, awareness, and shared humanity 💙
+  </p>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🌿 Today’s Reflection
+    </div>
+
+    <div class="community-post-text">
+      Some days the exhaustion is not physical… it’s emotional.
+      <br><br>
+      Caring carries invisible weight. If today felt heavy, please remember you were never meant to carry it all perfectly 💙
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      💛 Gentle Reminder
+    </div>
+
+    <div class="community-post-text">
+      You are allowed to grieve the changes while still loving the person deeply.
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🌼 From Odette
+    </div>
+
+    <div class="community-post-text">
+      Dementia changes many things… but connection, comfort, and kindness still matter enormously.
+      <br><br>
+      Even on difficult days, your presence matters more than perfection.
+    </div>
+
+  </div>
+
+</div>
     <!-- CRISIS HELP -->
     <div id="crisisSection" style="display:none;">
       <div class="library-section-title">
@@ -1214,12 +1301,14 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
       const lib = document.getElementById("librarySection");
       const crisis = document.getElementById("crisisSection");
       const stories = document.getElementById("storiesSection");
+      const community = document.getElementById("communitySection");
 
       const tabComp = document.getElementById("tabCompanion");
       const tabTool = document.getElementById("tabToolkit");
       const tabLib = document.getElementById("tabLibrary");
       const tabCrisis = document.getElementById("tabCrisis");
       const tabStories = document.getElementById("tabStories");
+      const tabCommunity = document.getElementById("tabCommunity");
 
       if(!comp || !tool || !lib || !crisis || !stories || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories) return;
 
@@ -1228,12 +1317,14 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
       lib.style.display = "none";
       crisis.style.display = "none";
       stories.style.display = "none";
+      community.style.display = "none";
 
       tabComp.classList.remove("nav-btn-active");
       tabTool.classList.remove("nav-btn-active");
       tabLib.classList.remove("nav-btn-active");
       tabCrisis.classList.remove("nav-btn-active");
       tabStories.classList.remove("nav-btn-active");
+      tabCommunity.classList.remove("nav-btn-active");
 
       if(section === "toolkit"){
         tool.style.display = "block";
@@ -1251,6 +1342,9 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
         comp.style.display = "block";
         tabComp.classList.add("nav-btn-active");
       }
+      } else if(section === "community"){
+  community.style.display = "block";
+  tabCommunity.classList.add("nav-btn-active");
     }
 
     const prompts = {
