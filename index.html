@@ -1221,7 +1221,7 @@ You’re doing more than you realise 🌼
       🌿 Today’s Reflection
     </div>
 
-    <div class="community-post-text">
+    <div class="community-post-text" id="communityReflection">
       Some days the exhaustion is not physical… it’s emotional.
       <br><br>
       Caring carries invisible weight. If today felt heavy, please remember you were never meant to carry it all perfectly 💙
@@ -1235,7 +1235,7 @@ You’re doing more than you realise 🌼
       💛 Gentle Reminder
     </div>
 
-    <div class="community-post-text">
+   <div class="community-post-text" id="communityReminder">
       You are allowed to grieve the changes while still loving the person deeply.
     </div>
 
@@ -1247,7 +1247,7 @@ You’re doing more than you realise 🌼
       🌼 From Odette
     </div>
 
-    <div class="community-post-text">
+   <div class="community-post-text" id="communityOdette">
       Dementia changes many things… but connection, comfort, and kindness still matter enormously.
       <br><br>
       Even on difficult days, your presence matters more than perfection.
@@ -1273,7 +1273,7 @@ You’re doing more than you realise 🌼
       🌿 Breathe With Me
     </div>
 
-    <div class="community-post-text">
+   <div class="community-post-text" id="calmBreathing">
       Breathe in slowly for 4…
       <br>
       Hold gently for 2…
@@ -1291,7 +1291,7 @@ You’re doing more than you realise 🌼
       🌼 Grounding Reset
     </div>
 
-    <div class="community-post-text">
+   <div class="community-post-text" id="calmGrounding">
       Name:
       <br><br>
       • 5 things you can see
@@ -1313,7 +1313,7 @@ You’re doing more than you realise 🌼
       💙 A Gentle Reminder
     </div>
 
-    <div class="community-post-text">
+   <div class="community-post-text" id="calmReminder">
       You do not need to solve everything right now.
       <br><br>
       Sometimes the bravest thing is simply pausing for a moment and breathing.
@@ -1908,11 +1908,94 @@ function clearStoryDraft(){
     btn.textContent = darkModeOn ? "☀️ Light Mode" : "🌙 Dark Mode";
   }
 }
+function pickDaily(items){
+  const today = new Date();
+  const dayNumber = Math.floor(today.getTime() / 86400000);
+  return items[dayNumber % items.length];
+}
 
+function setText(id, text){
+  const el = document.getElementById(id);
+  if(el){
+    el.innerHTML = text;
+  }
+}
+
+function loadRotatingContent(){
+
+  const communityReflections = [
+    "Some days the exhaustion is not physical… it’s emotional.<br><br>Caring carries invisible weight. If today felt heavy, please remember you were never meant to carry it all perfectly 💙",
+
+    "There are days when love feels quiet, tired, and stretched thin. That does not make it any less love.",
+
+    "You can miss the person they were while still loving the person in front of you today.",
+
+    "Sometimes the smallest moment of connection can carry you through a very hard day."
+  ];
+
+  const communityReminders = [
+    "You are allowed to grieve the changes while still loving the person deeply.",
+
+    "You do not have to get everything right to be doing something meaningful.",
+
+    "Rest is not selfish. It is part of staying able to care.",
+
+    "Even small moments matter 🌿"
+  ];
+
+  const odetteMessages = [
+    "Dementia changes many things… but connection, comfort, and kindness still matter enormously.<br><br>Even on difficult days, your presence matters more than perfection.",
+
+    "If today has felt heavy, please remember this: showing up with care is already something powerful.",
+
+    "You are not failing because this feels hard. It feels hard because it is hard.",
+
+    "Small acts of kindness can still reach places words no longer can."
+  ];
+
+  const breathingPrompts = [
+    "Breathe in slowly for 4…<br>Hold gently for 2…<br>Breathe out slowly for 6…<br><br>Repeat softly a few times.",
+
+    "Place both feet on the floor.<br><br>Take one slow breath in… and one longer breath out.",
+
+    "Let your shoulders drop if you can.<br><br>You do not need to fix everything in this moment.",
+
+    "Inhale gently.<br>Pause.<br>Exhale slowly.<br><br>Let this moment be enough."
+  ];
+
+  const groundingPrompts = [
+    "Name:<br><br>• 5 things you can see<br>• 4 things you can feel<br>• 3 things you can hear<br>• 2 things you can smell<br>• 1 thing you can taste",
+
+    "Look around the room and name one colour you can see.<br><br>Now name one sound. Now one thing supporting your body.",
+
+    "Hold something nearby if you can.<br><br>Notice its texture, weight, temperature, and shape.",
+
+    "Slowly press your feet into the floor.<br><br>Say to yourself: I am here. I am breathing. I can take this one moment at a time."
+  ];
+
+  const calmReminders = [
+    "You do not need to solve everything right now.<br><br>Sometimes the bravest thing is simply pausing for a moment and breathing.",
+
+    "This moment may be hard, but you do not have to carry the whole day at once.",
+
+    "A pause is not giving up. It is giving your mind somewhere soft to land.",
+
+    "You are allowed to take one minute for yourself."
+  ];
+
+  setText("communityReflection", pickDaily(communityReflections));
+  setText("communityReminder", pickDaily(communityReminders));
+  setText("communityOdette", pickDaily(odetteMessages));
+
+  setText("calmBreathing", pickDaily(breathingPrompts));
+  setText("calmGrounding", pickDaily(groundingPrompts));
+  setText("calmReminder", pickDaily(calmReminders));
+}
 function toggleDarkMode(){
   const isCurrentlyDark = document.body.classList.contains("dark-mode");
   localStorage.setItem(DARK_MODE_KEY, isCurrentlyDark ? "off" : "on");
   applyDarkModeSetting();
+  loadRotatingContent();
 }
     setInterval(saveTodayNotes, 2000);
 
