@@ -966,6 +966,43 @@ body.dark-mode .time-greeting-box{
 body.dark-mode .time-greeting-text{
   color:#edf6fb;
 }
+  .daily-checkin-box{
+  margin:16px 0;
+  padding:16px;
+  border-radius:16px;
+  background:#f7fbfc;
+  border:1px solid #d7e7ef;
+}
+
+.daily-checkin-heading{
+  font-weight:700;
+  color:#295166;
+  margin-bottom:10px;
+}
+
+.daily-checkin-question{
+  color:#48616d;
+  margin-bottom:12px;
+  line-height:1.6;
+  font-weight:600;
+}
+
+.daily-checkin-saved{
+  margin-top:10px;
+  color:#6b7f89;
+  font-size:.9rem;
+}
+
+body.dark-mode .daily-checkin-box{
+  background:#223f50;
+  border-color:#5f8fb5;
+}
+
+body.dark-mode .daily-checkin-heading,
+body.dark-mode .daily-checkin-question,
+body.dark-mode .daily-checkin-saved{
+  color:#edf6fb;
+}  
   </style>
 </head>
 
@@ -1030,6 +1067,30 @@ body.dark-mode .time-greeting-text{
   <div class="time-greeting-text" id="timeGreeting">
     Take today gently 💙
   </div>
+</div>
+      <div class="daily-checkin-box">
+
+  <div class="daily-checkin-heading">
+    💙 Gentle Daily Check-In
+  </div>
+
+  <div class="daily-checkin-question" id="dailyCheckinQuestion">
+    What has felt heavy today?
+  </div>
+
+  <textarea
+    id="dailyCheckinResponse"
+    class="journal-textarea"
+    placeholder="You can write as much or as little as you want..."></textarea>
+
+  <button class="journal-clear-btn" onclick="saveDailyCheckin()">
+    🌿 Save Reflection
+  </button>
+
+  <div id="dailyCheckinSaved" class="daily-checkin-saved">
+    Your reflection will stay saved on this device 💙
+  </div>
+
 </div>
       <div class="daily-quote-box">
   <div class="daily-quote-heading">🌼 Today’s Gentle Reminder</div>
@@ -2532,6 +2593,50 @@ function setText(id, text){
 
   setText("timeGreeting", greeting);
 }  
+ function loadDailyCheckin(){
+  const questions = [
+    "What has felt heavy today?",
+    "What helped, even a little?",
+    "What is one thing you need right now?",
+    "What memory has stayed with you today?",
+    "What made you pause today?",
+    "What emotion has been strongest today?",
+    "What brought even a small moment of comfort?",
+    "What would you say to yourself gently today?"
+  ];
+
+  setText(
+    "dailyCheckinQuestion",
+    pickDaily(questions)
+  );
+
+  const saved = localStorage.getItem("forgetMeNot_dailyCheckin");
+
+  if(saved){
+    const box = document.getElementById("dailyCheckinResponse");
+    if(box){
+      box.value = saved;
+    }
+  }
+}
+
+function saveDailyCheckin(){
+  const box = document.getElementById("dailyCheckinResponse");
+
+  if(!box) return;
+
+  localStorage.setItem(
+    "forgetMeNot_dailyCheckin",
+    box.value
+  );
+
+  const savedText = document.getElementById("dailyCheckinSaved");
+
+  if(savedText){
+    savedText.textContent =
+      "Reflection saved gently on this device 🌿";
+  }
+}   
 function loadDailyGentleQuote(){
   const quotes = [
     "Connection matters more than perfection.",
@@ -2776,6 +2881,7 @@ function toggleDarkMode(){
       applyDarkModeSetting();
       loadRotatingContent();
       loadDailyGentleQuote();
+      loadDailyCheckin();
       loadTimeGreeting();
 setupMoodCheckin();
       loadStoryDraft();
