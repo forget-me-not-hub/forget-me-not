@@ -1093,6 +1093,25 @@ body.dark-mode .calendar-day-number{
   flex-wrap:wrap;
   margin:10px 0;
 }
+    .calendar-day{
+  cursor:pointer;
+}
+
+.calendar-selected-day{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  background:#fffdf8;
+  border:1px solid #e4d0b6;
+  color:#48616d;
+  line-height:1.6;
+}
+
+body.dark-mode .calendar-selected-day{
+  background:#10232f;
+  border-color:#6fa8cf;
+  color:#edf6fb;
+}
   </style>
 </head>
 
@@ -2197,6 +2216,9 @@ You’re doing more than you realise 🌼
   <div class="calendar-grid" id="calendarGrid">
     Calendar loading...
   </div>
+  <div id="selectedCalendarDay" class="calendar-selected-day">
+  Tap a day with a dot to view reminders.
+</div>
 
 </div>
     <div class="community-post-title">
@@ -3015,7 +3037,7 @@ function buildCalendarGrid(){
     const hasReminder = reminders.some(r => r.date === dateString);
 
     html += `
-      <div class="calendar-day">
+      <div class="calendar-day" onclick="showCalendarDay('${dateString}')">
 
         <div class="calendar-day-number">
           ${day}
@@ -3028,6 +3050,25 @@ function buildCalendarGrid(){
   }
 
   grid.innerHTML = html;
+}
+    function showCalendarDay(dateString){
+  const display = document.getElementById("selectedCalendarDay");
+  if(!display) return;
+
+  const reminders = getCalendarReminders().filter(r => r.date === dateString);
+
+  if(reminders.length === 0){
+    display.innerHTML = "No reminders saved for this day.";
+    return;
+  }
+
+  display.innerHTML = reminders.map(reminder => `
+    <div style="margin-bottom:12px;">
+      <strong>${reminder.title}</strong><br>
+      ⏰ ${reminder.time || "No time"}<br>
+      ${reminder.notes || ""}
+    </div>
+  `).join("");
 }
  function changeCalendarMonth(direction){
   calendarViewDate.setMonth(calendarViewDate.getMonth() + direction);
