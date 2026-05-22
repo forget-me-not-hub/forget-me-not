@@ -10,16 +10,53 @@
     @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
     body{
       font-family:'Lexend', sans-serif;
-      background:#e9f5ff;
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(216,235,247,0.85),
+    transparent 40%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(191,220,237,0.55),
+    transparent 45%
+  ),
+
+  linear-gradient(
+    180deg,
+    #edf6fb 0%,
+    #dfeff7 100%
+  );
       margin:0;
       padding:0;
       display:flex;
       justify-content:center;
       align-items:flex-start;
       min-height:100vh;
+     transition:
+  background .6s ease,
+  color .3s ease; 
     }
  body.dark-mode{
-  background:#10232f;
+background:
+  radial-gradient(
+    circle at top left,
+    rgba(79,143,184,0.18),
+    transparent 35%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(111,168,207,0.14),
+    transparent 40%
+  ),
+
+  linear-gradient(
+    180deg,
+    #10232f 0%,
+    #162f3d 100%
+  );
   color:#edf6fb;
 }
 
