@@ -1913,6 +1913,80 @@ You’re doing more than you realise 🌼
   </details>
 
 </div>
+    <div id="toolboxSection">
+
+  <div class="library-section-title">
+    🫶 Coping Toolbox
+  </div>
+
+  <p class="soft-support-text">
+    Small gentle tools for overwhelming moments 💙
+  </p>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🫁 Breathing Reset
+    </div>
+
+    <div class="community-post-text">
+      Breathe in slowly for 4…<br>
+      Hold gently for 2…<br>
+      Breathe out slowly for 6…<br><br>
+
+      Repeat softly a few times 🌿
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🖐 Grounding Exercise
+    </div>
+
+    <div class="community-post-text">
+      Name:
+      <br><br>
+
+      • 5 things you can see<br>
+      • 4 things you can feel<br>
+      • 3 things you can hear<br>
+      • 2 things you can smell<br>
+      • 1 thing you can taste
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      💧 Gentle Reminder
+    </div>
+
+    <div class="community-post-text">
+      Have you had water recently?<br><br>
+
+      Sometimes exhaustion feels heavier when we are dehydrated or running on empty 💙
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      🌼 Gentle Affirmation
+    </div>
+
+  <div class="community-post-text" id="toolboxAffirmation">
+      You are doing enough.<br><br>
+
+      Even small acts of care still matter deeply.
+    </div>
+
+  </div>
+
+</div>
     <!-- CRISIS HELP -->
     <div id="crisisSection" style="display:none;">
       <div class="library-section-title">
@@ -2474,6 +2548,18 @@ function loadDailyGentleQuote(){
 
   setText("dailyGentleQuote", pickDaily(quotes));
 }
+   function loadToolboxAffirmation(){
+  const affirmations = [
+    "You are doing enough.<br><br>Even small acts of care still matter deeply.",
+    "You do not have to be strong every minute of the day.",
+    "It is okay to pause before you keep going.",
+    "Your care matters, even when nobody sees the whole picture.",
+    "Small steps still count on hard days.",
+    "You are allowed to need support too."
+  ];
+
+  setText("toolboxAffirmation", pickDaily(affirmations));
+} 
 function loadRotatingContent(){
 
   const communityReflections = [
@@ -2677,6 +2763,7 @@ function toggleDarkMode(){
   localStorage.setItem(DARK_MODE_KEY, isCurrentlyDark ? "off" : "on");
   applyDarkModeSetting();
   loadRotatingContent();
+  loadToolboxAffirmation();
   setupMoodCheckin();
   displayMoodHistory();
 }
