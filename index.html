@@ -1123,6 +1123,30 @@ body.dark-mode .calendar-selected-day{
 body.dark-mode .calendar-weekday{
   color:#edf6fb;
 }
+    .evening-mode-box{
+  margin:12px 0 16px 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background:#fdf7ff;
+  border:1px solid #e5d6f3;
+  color:#4a355e;
+}
+
+.evening-mode-title{
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.evening-mode-text{
+  line-height:1.6;
+  font-size:.95rem;
+}
+
+body.dark-mode .evening-mode-box{
+  background:#2f2740;
+  border-color:#8e77ad;
+  color:#f4ecff;
+}
   </style>
 </head>
 
@@ -1171,6 +1195,17 @@ body.dark-mode .calendar-weekday{
     <div class="time-date-bar">
   <div id="liveTime">Loading time...</div>
   <div id="liveDate">Loading date...</div>
+</div>
+    <div id="eveningModeBox" class="evening-mode-box" style="display:none;">
+
+  <div class="evening-mode-title">
+    🌙 Evening Wind-Down
+  </div>
+
+  <div class="evening-mode-text" id="eveningModeText">
+    The day can soften now. You do not need to carry everything into tonight.
+  </div>
+
 </div>
 
     <div class="nav-tabs">
@@ -2778,6 +2813,20 @@ function setText(id, text){
     el.innerHTML = text;
   }
 }
+    function applyEveningMode(){
+  const box = document.getElementById("eveningModeBox");
+  if(!box) return;
+
+  const hour = new Date().getHours();
+
+  if(hour >= 19 || hour < 5){
+    box.style.display = "block";
+    document.body.classList.add("evening-mode");
+  } else {
+    box.style.display = "none";
+    document.body.classList.remove("evening-mode");
+  }
+}
    function updateLiveTimeDate(){
   const now = new Date();
 
@@ -3272,6 +3321,7 @@ function toggleDarkMode(){
       loadDailyCheckin();
       loadTimeGreeting();
       updateLiveTimeDate();
+      applyEveningMode();
 setInterval(updateLiveTimeDate, 30000);
 setupMoodCheckin();
       loadStoryDraft();
