@@ -1033,6 +1033,21 @@ body.dark-mode #liveTime,
 body.dark-mode #liveDate{
   color:#edf6fb;
 }
+  .calendar-input{
+  width:100%;
+  padding:10px;
+  margin:6px 0 14px 0;
+  border-radius:10px;
+  border:1px solid #cddbe4;
+  font-size:.95rem;
+  box-sizing:border-box;
+}
+
+body.dark-mode .calendar-input{
+  background:#10232f;
+  border-color:#6fa8cf;
+  color:#edf6fb;
+}  
   </style>
 </head>
 
@@ -1093,6 +1108,7 @@ body.dark-mode #liveDate{
       <button class="nav-btn" id="tabCommunity" onclick="showSection('community')">🌼 Community Corner</button>
       <button class="nav-btn" id="tabCalm" onclick="showSection('calm')">🎧 Calm Corner</button>
       <button class="nav-btn" id="tabStoriesWall" onclick="showSection('storieswall')">📖 Stories Wall</button>
+      <button class="nav-btn" id="tabCalendar" onclick="showSection('calendar')">📅 Calendar</button>
     </div>
 
     <!-- COMPANION -->
@@ -2082,6 +2098,58 @@ You’re doing more than you realise 🌼
   </div>
 
 </div>
+    <!-- CALENDAR -->
+<div id="calendarSection" style="display:none;">
+
+  <div class="library-section-title">
+    📅 Calendar & Gentle Reminders
+  </div>
+
+  <p class="soft-support-text">
+    A simple place to save appointments, routines, and gentle reminders 💙
+  </p>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      Add a reminder
+    </div>
+
+    <div class="community-post-text">
+
+      <label for="calendarTitle">What is it for?</label>
+      <input id="calendarTitle" class="calendar-input" type="text" placeholder="GP appointment, medication review, family visit...">
+
+      <label for="calendarDate">Date</label>
+      <input id="calendarDate" class="calendar-input" type="date">
+
+      <label for="calendarTime">Time</label>
+      <input id="calendarTime" class="calendar-input" type="time">
+
+      <label for="calendarNotes">Notes</label>
+      <textarea id="calendarNotes" class="journal-textarea" placeholder="Anything useful to remember..."></textarea>
+
+      <button class="journal-clear-btn" onclick="saveCalendarReminder()">
+        💙 Save Reminder
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="community-post">
+
+    <div class="community-post-title">
+      Upcoming reminders
+    </div>
+
+    <div id="calendarList" class="community-post-text">
+      No reminders saved yet.
+    </div>
+
+  </div>
+
+</div>
     <!-- CRISIS HELP -->
     <div id="crisisSection" style="display:none;">
       <div class="library-section-title">
@@ -2161,6 +2229,8 @@ It’s okay if today feels heavy. Please don’t carry it alone 🤍
   const tabCommunity = document.getElementById("tabCommunity");
      const tabCalm = document.getElementById("tabCalm");
      const tabStoriesWall = document.getElementById("tabStoriesWall");
+     const cal = document.getElementById("calendarSection");
+const tabCalendar = document.getElementById("tabCalendar");
 
 if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !storieswall || !tabComp || !tabTool || !tabLib || !tabCrisis || !tabStories || !tabCommunity || !tabCalm || !tabStoriesWall) return;
 
@@ -2170,6 +2240,7 @@ if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !stor
   crisis.style.display = "none";
   stories.style.display = "none";
   community.style.display = "none";
+  cal.style.display = "none";   
      calm.style.display = "none";
      storieswall.style.display = "none";
 
@@ -2179,6 +2250,7 @@ if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !stor
   tabCrisis.classList.remove("nav-btn-active");
   tabStories.classList.remove("nav-btn-active");
   tabCommunity.classList.remove("nav-btn-active");
+     tabCalendar.classList.remove("nav-btn-active");
    tabCalm.classList.remove("nav-btn-active");
      tabStoriesWall.classList.remove("nav-btn-active");
 
@@ -2194,6 +2266,9 @@ if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !stor
   } else if(section === "stories"){
     stories.style.display = "block";
     tabStories.classList.add("nav-btn-active");
+    } else if(section === "calendar"){
+  cal.style.display = "block";
+  tabCalendar.classList.add("nav-btn-active");
   } else if(section === "community"){
     community.style.display = "block";
     tabCommunity.classList.add("nav-btn-active");
@@ -2789,6 +2864,83 @@ function loadRotatingContent(){
   setText("calmGrounding", pickDaily(groundingPrompts));
   setText("calmReminder", pickDaily(calmReminders));
 }
+    const CALENDAR_KEY = "forgetMeNot_calendar";
+
+function getCalendarReminders(){
+  const raw = localStorage.getItem(CALENDAR_KEY);
+
+  if(!raw) return [];
+
+  try{
+    return JSON.parse(raw) || [];
+  } catch{
+    return [];
+  }
+}
+
+function saveCalendarReminder(){
+
+  const title = document.getElementById("calendarTitle");
+  const date = document.getElementById("calendarDate");
+  const time = document.getElementById("calendarTime");
+  const notes = document.getElementById("calendarNotes");
+
+  if(!title || !date || !time || !notes) return;
+
+  if(title.value.trim() === ""){
+    alert("Please add a reminder title.");
+    return;
+  }
+
+  const reminders = getCalendarReminders();
+
+  reminders.push({
+    title: title.value,
+    date: date.value,
+    time: time.value,
+    notes: notes.value
+  });
+
+  localStorage.setItem(
+    CALENDAR_KEY,
+    JSON.stringify(reminders)
+  );
+
+  title.value = "";
+  date.value = "";
+  time.value = "";
+  notes.value = "";
+
+  displayCalendarReminders();
+}
+
+function displayCalendarReminders(){
+
+  const list = document.getElementById("calendarList");
+
+  if(!list) return;
+
+  const reminders = getCalendarReminders();
+
+  if(reminders.length === 0){
+    list.textContent = "No reminders saved yet.";
+    return;
+  }
+
+  list.innerHTML = reminders.map(reminder => `
+    <div style="margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #d7e7ef;">
+
+      <strong>${reminder.title}</strong><br>
+
+      📅 ${reminder.date || "No date"}<br>
+
+      ⏰ ${reminder.time || "No time"}<br><br>
+
+      ${reminder.notes || ""}
+
+    </div>
+  `).join("");
+}
     function getMoodHistory(){
   const raw = localStorage.getItem("forgetMeNot_moodHistory");
 
@@ -2817,6 +2969,7 @@ function saveMoodHistory(mood){
   );
 
   displayMoodHistory();
+  displayCalendarReminders();
 }
 
 function displayMoodHistory(){
