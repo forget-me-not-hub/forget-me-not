@@ -865,10 +865,96 @@ body.dark-mode .mood-history-title,
 body.dark-mode .mood-history-display{
   color:#edf6fb;
 } 
+    .floating-particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+.floating-particles span{
+  position:absolute;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(110,168,255,.22);
+  animation:floatParticle 14s linear infinite;
+}
+
+.floating-particles span:nth-child(1){
+  left:10%;
+  animation-delay:0s;
+  animation-duration:16s;
+}
+
+.floating-particles span:nth-child(2){
+  left:25%;
+  animation-delay:3s;
+  animation-duration:18s;
+}
+
+.floating-particles span:nth-child(3){
+  left:45%;
+  animation-delay:6s;
+  animation-duration:20s;
+}
+
+.floating-particles span:nth-child(4){
+  left:65%;
+  animation-delay:2s;
+  animation-duration:17s;
+}
+
+.floating-particles span:nth-child(5){
+  left:80%;
+  animation-delay:5s;
+  animation-duration:19s;
+}
+
+.floating-particles span:nth-child(6){
+  left:92%;
+  animation-delay:8s;
+  animation-duration:21s;
+}
+
+@keyframes floatParticle{
+  0%{
+    transform:translateY(110vh) scale(.7);
+    opacity:0;
+  }
+  15%{
+    opacity:.7;
+  }
+  85%{
+    opacity:.5;
+  }
+  100%{
+    transform:translateY(-10vh) scale(1.2);
+    opacity:0;
+  }
+}
+
+.app{
+  position:relative;
+  z-index:1;
+}
+
+body.dark-mode .floating-particles span{
+  background:rgba(180,215,255,.26);
+}
   </style>
 </head>
 
 <body>
+  <div class="floating-particles">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
   <div id="splashScreen" class="splash-screen">
   <div class="splash-content">
   <div class="splash-forget-me-not">
