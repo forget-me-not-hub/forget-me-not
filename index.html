@@ -1087,6 +1087,12 @@ body.dark-mode .calendar-day{
 body.dark-mode .calendar-day-number{
   color:#edf6fb;
 }
+    .calendar-month-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:10px 0;
+}
   </style>
 </head>
 
@@ -2183,6 +2189,10 @@ You’re doing more than you realise 🌼
   <div class="community-post-title" id="calendarMonthTitle">
     Month View
   </div>
+  <div class="calendar-month-controls">
+  <button class="journal-clear-btn" onclick="changeCalendarMonth(-1)">⬅️ Previous Month</button>
+  <button class="journal-clear-btn" onclick="changeCalendarMonth(1)">Next Month ➡️</button>
+</div>
 
   <div class="calendar-grid" id="calendarGrid">
     Calendar loading...
@@ -2915,6 +2925,7 @@ function loadRotatingContent(){
   setText("calmReminder", pickDaily(calmReminders));
 }
     const CALENDAR_KEY = "forgetMeNot_calendar";
+    let calendarViewDate = new Date();
 
 function getCalendarReminders(){
   const raw = localStorage.getItem(CALENDAR_KEY);
@@ -2972,7 +2983,7 @@ function buildCalendarGrid(){
 
   if(!grid || !title) return;
 
-  const now = new Date();
+ const now = calendarViewDate;
 
   const year = now.getFullYear();
   const month = now.getMonth();
@@ -3018,6 +3029,10 @@ function buildCalendarGrid(){
 
   grid.innerHTML = html;
 }
+ function changeCalendarMonth(direction){
+  calendarViewDate.setMonth(calendarViewDate.getMonth() + direction);
+  buildCalendarGrid();
+}   
 function displayCalendarReminders(){
 
   const list = document.getElementById("calendarList");
