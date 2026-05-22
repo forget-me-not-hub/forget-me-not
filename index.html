@@ -768,6 +768,75 @@ body.dark-mode .memory-jar-display{
   border-color:#6fa8cf;
   color:#d6e6ee;
 }
+    .hard-day-section{
+  margin:18px 0;
+  padding:16px;
+  border-radius:16px;
+  background:#fdf8fb;
+  border:1px solid #ead4de;
+}
+
+.hard-day-title{
+  font-weight:700;
+  color:#7a4862;
+  margin-bottom:8px;
+  font-size:1rem;
+}
+
+.hard-day-text{
+  color:#6a5a64;
+  margin-bottom:14px;
+  line-height:1.6;
+}
+
+.hard-day-support{
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  background:#fffdf8;
+  border:1px solid #ecd7b7;
+}
+
+.hard-day-message{
+  font-weight:700;
+  color:#6a5161;
+  margin-bottom:12px;
+}
+
+.hard-day-breathing{
+  line-height:1.8;
+  margin-bottom:12px;
+  color:#48616d;
+}
+
+.hard-day-reminder{
+  color:#7a4862;
+  font-style:italic;
+}
+
+body.dark-mode .hard-day-section{
+  background:#3a2940;
+  border-color:#7a5c73;
+}
+
+body.dark-mode .hard-day-title{
+  color:#ffdce8;
+}
+
+body.dark-mode .hard-day-text{
+  color:#f1dbe5;
+}
+
+body.dark-mode .hard-day-support{
+  background:#10232f;
+  border-color:#6fa8cf;
+}
+
+body.dark-mode .hard-day-message,
+body.dark-mode .hard-day-breathing,
+body.dark-mode .hard-day-reminder{
+  color:#edf6fb;
+}
   </style>
 </head>
 
@@ -993,7 +1062,39 @@ Thoughts, worries, memories, reminders, or simply how today has felt."></textare
   </div>
 
 </div>
+<div class="hard-day-section">
 
+  <div class="hard-day-title">
+    🫶 Today Was Hard
+  </div>
+
+  <div class="hard-day-text">
+    If today has felt emotionally heavy, overwhelming, or exhausting, pause here for a moment 💙
+  </div>
+
+  <button class="journal-clear-btn" onclick="showHardDaySupport()">
+    🌿 Open Gentle Support
+  </button>
+
+  <div id="hardDaySupportBox" class="hard-day-support" style="display:none;">
+
+    <div class="hard-day-message">
+      You do not need to carry the whole day at once.
+    </div>
+
+    <div class="hard-day-breathing">
+      🌬 Take one slow breath in…<br>
+      Hold gently for a moment…<br>
+      Then breathe out slowly.
+    </div>
+
+    <div class="hard-day-reminder">
+      💙 You are not failing because this feels hard.
+    </div>
+
+  </div>
+
+</div>
         <div class="journal-subheading">Previous days:</div>
         <select id="pastDatesSelect" class="journal-past-select" onchange="showPastNotes()">
           <option value="">Select a date to view...</option>
@@ -2323,6 +2424,17 @@ function openMemoryJar(){
 
   display.innerHTML = "🌼 From your Memory Jar:<br><br>" + memory.text + "<br><br><small>Saved: " + memory.date + "</small>";
 } 
+    function showHardDaySupport(){
+  const box = document.getElementById("hardDaySupportBox");
+
+  if(!box) return;
+
+  if(box.style.display === "none"){
+    box.style.display = "block";
+  } else {
+    box.style.display = "none";
+  }
+}
     function setupMoodCheckin(){
   const moodButtons = document.querySelectorAll(".mood-btn");
 
