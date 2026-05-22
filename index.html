@@ -3153,6 +3153,12 @@ function buildCalendarGrid(){
       <strong>${reminder.title}</strong><br>
       ⏰ ${reminder.time || "No time"}<br>
       ${reminder.notes || ""}
+      <br><br>
+
+<button class="journal-clear-btn"
+onclick="deleteCalendarReminder('${reminder.title}','${reminder.date}','${reminder.time}')">
+  Delete
+</button>
     </div>
   `).join("");
 }
@@ -3173,7 +3179,7 @@ function displayCalendarReminders(){
     return;
   }
 
-  list.innerHTML = reminders.map(reminder => `
+  list.innerHTML = reminders.map((reminder, index) => `
     <div style="margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid #d7e7ef;">
 
       <strong>${reminder.title}</strong><br>
@@ -3183,6 +3189,23 @@ function displayCalendarReminders(){
       ⏰ ${reminder.time || "No time"}<br><br>
 
       ${reminder.notes || ""}
+      <br><br>
+<button class="journal-clear-btn" onclick="deleteCalendarReminder(index)">
+  Delete
+</button>
+function deleteCalendarReminder(index){
+  let reminders = getCalendarReminders();
+
+  reminders.splice(index, 1);
+
+  localStorage.setItem(
+    CALENDAR_KEY,
+    JSON.stringify(reminders)
+  );
+
+  displayCalendarReminders();
+  buildCalendarGrid();
+}
 
     </div>
   `).join("");
