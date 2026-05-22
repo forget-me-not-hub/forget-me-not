@@ -1147,6 +1147,30 @@ body.dark-mode .evening-mode-box{
   border-color:#8e77ad;
   color:#f4ecff;
 }
+    .weather-mood-box{
+  margin:12px 0 16px 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background:#f7fbfc;
+  border:1px solid #d7e7ef;
+  color:#295166;
+}
+
+.weather-mood-title{
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.weather-mood-text{
+  line-height:1.6;
+  font-size:.95rem;
+}
+
+body.dark-mode .weather-mood-box{
+  background:#223f50;
+  border-color:#5f8fb5;
+  color:#edf6fb;
+}
   </style>
 </head>
 
@@ -1204,6 +1228,17 @@ body.dark-mode .evening-mode-box{
 
   <div class="evening-mode-text" id="eveningModeText">
     The day can soften now. You do not need to carry everything into tonight.
+  </div>
+
+</div>
+    <div id="weatherMoodBox" class="weather-mood-box">
+
+  <div class="weather-mood-title" id="weatherMoodTitle">
+    🌤 Gentle Atmosphere
+  </div>
+
+  <div class="weather-mood-text" id="weatherMoodText">
+    A calm start to the day 🌼
   </div>
 
 </div>
@@ -2816,6 +2851,28 @@ function setText(id, text){
     el.innerHTML = text;
   }
 }
+    function applyWeatherMood(){
+  const title = document.getElementById("weatherMoodTitle");
+  const text = document.getElementById("weatherMoodText");
+
+  if(!title || !text) return;
+
+  const hour = new Date().getHours();
+
+  if(hour >= 5 && hour < 12){
+    title.textContent = "🌤 Morning Atmosphere";
+    text.textContent = "A gentle start to the day. Keep things calm, familiar, and steady.";
+  } else if(hour >= 12 && hour < 17){
+    title.textContent = "☀️ Afternoon Atmosphere";
+    text.textContent = "The day may feel busier now. A short pause, drink, or quiet moment can help.";
+  } else if(hour >= 17 && hour < 22){
+    title.textContent = "🌙 Evening Atmosphere";
+    text.textContent = "As the day softens, reduce noise, lower stimulation, and move gently into the evening.";
+  } else {
+    title.textContent = "🌌 Night Atmosphere";
+    text.textContent = "Night can feel lonely or unsettled. Keep light soft, voices gentle, and expectations low.";
+  }
+}
     function applyEveningMode(){
   const box = document.getElementById("eveningModeBox");
   if(!box) return;
@@ -3362,6 +3419,7 @@ function toggleDarkMode(){
       loadTimeGreeting();
       updateLiveTimeDate();
       applyEveningMode();
+      applyWeatherMood();
 setInterval(updateLiveTimeDate, 30000);
 setupMoodCheckin();
       loadStoryDraft();
