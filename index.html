@@ -1003,6 +1003,36 @@ body.dark-mode .daily-checkin-question,
 body.dark-mode .daily-checkin-saved{
   color:#edf6fb;
 }  
+    .time-date-bar{
+  margin:12px 0 16px 0;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#f7fbfc;
+  border:1px solid #d7e7ef;
+  text-align:center;
+  color:#295166;
+}
+
+#liveTime{
+  font-size:1.15rem;
+  font-weight:700;
+}
+
+#liveDate{
+  font-size:.9rem;
+  color:#6b7d86;
+  margin-top:4px;
+}
+
+body.dark-mode .time-date-bar{
+  background:#223f50;
+  border-color:#5f8fb5;
+}
+
+body.dark-mode #liveTime,
+body.dark-mode #liveDate{
+  color:#edf6fb;
+}
   </style>
 </head>
 
@@ -1048,6 +1078,10 @@ body.dark-mode .daily-checkin-saved{
       <h1 class="fm-header-title">The Forget Me Not Dementia Digital Companion</h1>
       <p class="fm-header-subtitle">A gentle digital space for memory prompts, reflection, and carer support 💙</p>
     </div>
+    <div class="time-date-bar">
+  <div id="liveTime">Loading time...</div>
+  <div id="liveDate">Loading date...</div>
+</div>
 
     <div class="nav-tabs">
      <button class="nav-btn" id="darkModeBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
@@ -2576,7 +2610,27 @@ function setText(id, text){
     el.innerHTML = text;
   }
 }
-    
+   function updateLiveTimeDate(){
+  const now = new Date();
+
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const date = now.toLocaleDateString([], {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const timeEl = document.getElementById("liveTime");
+  const dateEl = document.getElementById("liveDate");
+
+  if(timeEl) timeEl.textContent = time;
+  if(dateEl) dateEl.textContent = date;
+} 
   function loadTimeGreeting(){
   const hour = new Date().getHours();
   let greeting = "";
@@ -2883,6 +2937,8 @@ function toggleDarkMode(){
       loadDailyGentleQuote();
       loadDailyCheckin();
       loadTimeGreeting();
+      updateLiveTimeDate();
+setInterval(updateLiveTimeDate, 30000);
 setupMoodCheckin();
       loadStoryDraft();
 
