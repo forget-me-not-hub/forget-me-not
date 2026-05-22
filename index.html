@@ -1246,6 +1246,9 @@ body.dark-mode .evening-mode-box{
   <button class="journal-clear-btn" onclick="saveDailyCheckin()">
     🌿 Save Reflection
   </button>
+        <button class="journal-clear-btn" onclick="clearDailyCheckin()">
+  Clear Reflection
+</button>
 
   <div id="dailyCheckinSaved" class="daily-checkin-saved">
     Your reflection will stay saved on this device 💙
@@ -2907,7 +2910,21 @@ function saveDailyCheckin(){
     savedText.textContent =
       "Reflection saved gently on this device 🌿";
   }
-}   
+} 
+  function clearDailyCheckin(){
+  const box = document.getElementById("dailyCheckinResponse");
+  const savedText = document.getElementById("dailyCheckinSaved");
+
+  localStorage.removeItem("forgetMeNot_dailyCheckin");
+
+  if(box){
+    box.value = "";
+  }
+
+  if(savedText){
+    savedText.textContent = "Reflection cleared 🌿";
+  }
+}  
 function loadDailyGentleQuote(){
   const quotes = [
     "Connection matters more than perfection.",
