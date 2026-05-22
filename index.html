@@ -943,6 +943,29 @@ body.dark-mode .mood-history-display{
 body.dark-mode .floating-particles span{
   background:rgba(180,215,255,.26);
 }
+    .time-greeting-box{
+  margin:14px 0;
+  padding:14px 16px;
+  border-radius:16px;
+  background:#fffdf8;
+  border:1px solid #ecd7b7;
+}
+
+.time-greeting-text{
+  color:#5a4632;
+  font-size:.98rem;
+  line-height:1.6;
+  font-weight:600;
+}
+
+body.dark-mode .time-greeting-box{
+  background:#223f50;
+  border-color:#5f8fb5;
+}
+
+body.dark-mode .time-greeting-text{
+  color:#edf6fb;
+}
   </style>
 </head>
 
@@ -1003,6 +1026,11 @@ body.dark-mode .floating-particles span{
 
     <!-- COMPANION -->
     <div id="companionSection">
+      <div class="time-greeting-box">
+  <div class="time-greeting-text" id="timeGreeting">
+    Take today gently 💙
+  </div>
+</div>
       <div class="daily-quote-box">
   <div class="daily-quote-heading">🌼 Today’s Gentle Reminder</div>
   <div class="daily-quote-text" id="dailyGentleQuote">
@@ -2414,6 +2442,22 @@ function setText(id, text){
   }
 }
     
+  function loadTimeGreeting(){
+  const hour = new Date().getHours();
+  let greeting = "";
+
+  if(hour >= 5 && hour < 12){
+    greeting = "Good morning 🌤 Take today gently.";
+  } else if(hour >= 12 && hour < 17){
+    greeting = "Good afternoon 💙 One moment at a time.";
+  } else if(hour >= 17 && hour < 22){
+    greeting = "Good evening 🌙 You made it through today.";
+  } else {
+    greeting = "Late night check-in 🌿 The world can wait until morning.";
+  }
+
+  setText("timeGreeting", greeting);
+}  
 function loadDailyGentleQuote(){
   const quotes = [
     "Connection matters more than perfection.",
@@ -2645,6 +2689,7 @@ function toggleDarkMode(){
       applyDarkModeSetting();
       loadRotatingContent();
       loadDailyGentleQuote();
+      loadTimeGreeting();
 setupMoodCheckin();
       loadStoryDraft();
 
