@@ -837,6 +837,34 @@ body.dark-mode .hard-day-breathing,
 body.dark-mode .hard-day-reminder{
   color:#edf6fb;
 }
+   .mood-history-box{
+  margin:14px 0 18px 0;
+  padding:14px;
+  border-radius:14px;
+  background:#f7fbfc;
+  border:1px solid #d7e7ef;
+}
+
+.mood-history-title{
+  font-weight:700;
+  color:#295166;
+  margin-bottom:10px;
+}
+
+.mood-history-display{
+  color:#48616d;
+  line-height:1.8;
+}
+
+body.dark-mode .mood-history-box{
+  background:#223f50;
+  border-color:#5f8fb5;
+}
+
+body.dark-mode .mood-history-title,
+body.dark-mode .mood-history-display{
+  color:#edf6fb;
+} 
   </style>
 </head>
 
@@ -987,6 +1015,17 @@ body.dark-mode .hard-day-reminder{
   </div>
 
 </div>
+     <div class="mood-history-box">
+
+  <div class="mood-history-title">
+    📊 Recent Mood Check-ins
+  </div>
+
+  <div id="moodHistoryDisplay" class="mood-history-display">
+    Your recent moods will appear here.
+  </div>
+
+</div>   
         <p class="soft-support-text">
 There’s no right or wrong way to feel today 💙
 </p>
@@ -2375,6 +2414,52 @@ function loadRotatingContent(){
   setText("calmGrounding", pickDaily(groundingPrompts));
   setText("calmReminder", pickDaily(calmReminders));
 }
+    function getMoodHistory(){
+  const raw = localStorage.getItem("forgetMeNot_moodHistory");
+
+  if(!raw) return [];
+
+  try{
+    return JSON.parse(raw) || [];
+  } catch{
+    return [];
+  }
+}
+
+function saveMoodHistory(mood){
+  let moods = getMoodHistory();
+
+  moods.unshift({
+    mood: mood,
+    date: new Date().toLocaleDateString()
+  });
+
+  moods = moods.slice(0, 7);
+
+  localStorage.setItem(
+    "forgetMeNot_moodHistory",
+    JSON.stringify(moods)
+  );
+
+  displayMoodHistory();
+}
+
+function displayMoodHistory(){
+  const display = document.getElementById("moodHistoryDisplay");
+
+  if(!display) return;
+
+  const moods = getMoodHistory();
+
+  if(moods.length === 0){
+    display.textContent = "Your recent moods will appear here.";
+    return;
+  }
+
+  display.innerHTML = moods.map(item =>
+    "• " + item.mood + " <small>(" + item.date + ")</small>"
+  ).join("<br>");
+}
    function getMemoryJar(){
   const raw = localStorage.getItem(MEMORY_JAR_KEY);
   if(!raw) return [];
@@ -2444,6 +2529,7 @@ function openMemoryJar(){
       button.classList.add("mood-btn-active");
 
       localStorage.setItem("forgetMeNot_moodToday", button.textContent.trim());
+      saveMoodHistory(button.textContent.trim());
     });
   });
 
@@ -2462,6 +2548,7 @@ function toggleDarkMode(){
   applyDarkModeSetting();
   loadRotatingContent();
   setupMoodCheckin();
+  displayMoodHistory();
 }
     setInterval(saveTodayNotes, 2000);
 
