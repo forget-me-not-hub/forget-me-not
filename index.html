@@ -728,6 +728,46 @@ body.dark-mode .daily-quote-heading{
 body.dark-mode .daily-quote-text{
   color:#d6e6ee;
 } 
+    .memory-jar-section{
+  margin:18px 0;
+  padding:16px;
+  border-radius:16px;
+  background:#f7fbfc;
+  border:1px solid #d7e7ef;
+}
+
+.memory-jar-title{
+  font-weight:700;
+  color:#295166;
+  margin-bottom:10px;
+  font-size:1rem;
+}
+
+.memory-jar-display{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fffdf8;
+  border:1px solid #e4d0b6;
+  min-height:50px;
+  color:#48616d;
+  line-height:1.6;
+}
+
+body.dark-mode .memory-jar-section{
+  background:#223f50;
+  border-color:#5f8fb5;
+}
+
+body.dark-mode .memory-jar-title{
+  color:#edf6fb;
+}
+
+body.dark-mode .memory-jar-display{
+  background:#10232f;
+  border-color:#6fa8cf;
+  color:#d6e6ee;
+}
   </style>
 </head>
 
@@ -927,6 +967,32 @@ Thoughts, worries, memories, reminders, or simply how today has felt."></textare
         <button class="journal-clear-btn" onclick="downloadJournal()">Download My Journal</button>
 
         <div style="margin:10px 0; border-top:1px solid #ecd7b7;"></div>
+        <div class="memory-jar-section">
+
+  <div class="memory-jar-title">
+    📖 Memory Jar
+  </div>
+
+  <textarea
+    id="memoryJarInput"
+    class="journal-textarea"
+    placeholder="Save a special memory, meaningful moment, comforting thought, or small win from today..."></textarea>
+
+  <br><br>
+
+  <button class="journal-clear-btn" onclick="saveMemoryJar()">
+    🌼 Save To Memory Jar
+  </button>
+
+  <button class="journal-clear-btn" onclick="openMemoryJar()">
+    📖 Open Memory Jar
+  </button>
+
+  <div id="memoryJarDisplay" class="memory-jar-display">
+    Your saved memories will appear here 🌿
+  </div>
+
+</div>
 
         <div class="journal-subheading">Previous days:</div>
         <select id="pastDatesSelect" class="journal-past-select" onchange="showPastNotes()">
@@ -1891,6 +1957,7 @@ if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !stor
     const JOURNAL_KEY = "forgetMeNot_journal";
     const DARK_MODE_KEY = "forgetMeNot_darkMode";
     const STORY_KEY = "forgetMeNot_storyDraft";
+    const MEMORY_JAR_KEY = "forgetMeNot_memoryJar";
 
     function getTodayKey(){
       const d = new Date();
@@ -2207,6 +2274,55 @@ function loadRotatingContent(){
   setText("calmGrounding", pickDaily(groundingPrompts));
   setText("calmReminder", pickDaily(calmReminders));
 }
+   function getMemoryJar(){
+  const raw = localStorage.getItem(MEMORY_JAR_KEY);
+  if(!raw) return [];
+  try{
+    return JSON.parse(raw) || [];
+  } catch{
+    return [];
+  }
+}
+
+function saveMemoryJar(){
+  const input = document.getElementById("memoryJarInput");
+  const display = document.getElementById("memoryJarDisplay");
+  if(!input || !display) return;
+
+  const memory = input.value.trim();
+
+  if(!memory){
+    alert("Write a memory, moment, or small win first.");
+    return;
+  }
+
+  const memories = getMemoryJar();
+  memories.push({
+    text: memory,
+    date: new Date().toLocaleDateString()
+  });
+
+  localStorage.setItem(MEMORY_JAR_KEY, JSON.stringify(memories));
+  input.value = "";
+  display.textContent = "Memory saved gently into your jar 🌼";
+}
+
+function openMemoryJar(){
+  const display = document.getElementById("memoryJarDisplay");
+  if(!display) return;
+
+  const memories = getMemoryJar();
+
+  if(memories.length === 0){
+    display.textContent = "Your Memory Jar is empty for now. Add a small memory when you're ready 🌿";
+    return;
+  }
+
+  const index = Math.floor(Math.random() * memories.length);
+  const memory = memories[index];
+
+  display.innerHTML = "🌼 From your Memory Jar:<br><br>" + memory.text + "<br><br><small>Saved: " + memory.date + "</small>";
+} 
     function setupMoodCheckin(){
   const moodButtons = document.querySelectorAll(".mood-btn");
 
