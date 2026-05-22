@@ -1333,6 +1333,20 @@ body.dark-mode .toolkit-section-title,
 body.dark-mode .journal-heading{
   color:#edf6fb;
 }
+    .fade-section{
+  animation:softFadeIn .28s ease both;
+}
+
+@keyframes softFadeIn{
+  from{
+    opacity:0;
+    transform:translateY(6px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
   </style>
 </head>
 
@@ -2584,30 +2598,39 @@ if(!comp || !tool || !lib || !crisis || !stories || !community || !calm || !stor
 
   if(section === "toolkit"){
     tool.style.display = "block";
+    tool.classList.add("fade-section");
     tabTool.classList.add("nav-btn-active");
   } else if(section === "library"){
     lib.style.display = "block";
+   lib.classList.add("fade-section");
     tabLib.classList.add("nav-btn-active");
   } else if(section === "crisis"){
     crisis.style.display = "block";
+    crisis.classList.add("fade-section");
     tabCrisis.classList.add("nav-btn-active");
   } else if(section === "stories"){
     stories.style.display = "block";
+     stories.classList.add("fade-section");
     tabStories.classList.add("nav-btn-active");
     } else if(section === "calendar"){
   cal.style.display = "block";
+   cal.classList.add("fade-section");
   tabCalendar.classList.add("nav-btn-active");
   } else if(section === "community"){
     community.style.display = "block";
+  community.classList.add("fade-section");
     tabCommunity.classList.add("nav-btn-active");
    } else if(section === "calm"){
   calm.style.display = "block";
+    calm.classList.add("fade-section");
   tabCalm.classList.add("nav-btn-active"); 
    } else if(section === "storieswall"){
   storieswall.style.display = "block";
+   storieswall.classList.add("fade-section"); 
   tabStoriesWall.classList.add("nav-btn-active"); 
   } else {
     comp.style.display = "block";
+   comp.classList.add("fade-section");
     tabComp.classList.add("nav-btn-active");
   }
 }
