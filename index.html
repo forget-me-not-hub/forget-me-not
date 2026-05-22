@@ -113,13 +113,26 @@ body.dark-mode select,
 body.dark-mode .guided-journal-textarea{
   width:100%;
   min-height:95px;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid #cddbe4;
+
+  padding:14px 16px;
+
+  border-radius:18px;
+  border:1px solid #c7ddeb;
+
+  background:rgba(255,255,255,0.88);
+
+  font-family:'Lexend', sans-serif;
   font-size:.95rem;
-  line-height:1.6;
+  line-height:1.7;
+  color:#295166;
+
   box-sizing:border-box;
-  display:block;
+
+  box-shadow:
+    0 4px 10px rgba(41,81,102,0.05);
+
+  transition:all .22s ease;
+
   margin-top:8px;
   resize:vertical;
 }
@@ -1058,14 +1071,28 @@ body.dark-mode #liveTime,
 body.dark-mode #liveDate{
   color:#edf6fb;
 }
-  .calendar-input{
+ .calendar-input{
   width:100%;
-  padding:10px;
-  margin:6px 0 14px 0;
-  border-radius:10px;
-  border:1px solid #cddbe4;
+  padding:14px 16px;
+
+  border-radius:18px;
+  border:1px solid #c7ddeb;
+
+  background:rgba(255,255,255,0.88);
+
+  font-family:'Lexend', sans-serif;
   font-size:.95rem;
+  color:#295166;
+
   box-sizing:border-box;
+
+  box-shadow:
+    0 4px 10px rgba(41,81,102,0.05);
+
+  transition:all .22s ease;
+
+  margin-top:8px;
+  margin-bottom:16px;
 }
 
 body.dark-mode .calendar-input{
@@ -1231,6 +1258,32 @@ input{
 
 body.dark-mode .guided-journal-section label{
   color:#edf6fb;
+}
+    textarea:focus,
+select:focus,
+input:focus{
+  outline:none;
+
+  border-color:#6fa8cf;
+
+  box-shadow:
+    0 0 0 4px rgba(111,168,207,0.18),
+    0 8px 18px rgba(41,81,102,0.08);
+
+  background:#ffffff;
+}
+
+body.dark-mode textarea,
+body.dark-mode select,
+body.dark-mode input{
+  background:rgba(16,35,47,0.92);
+
+  border:1px solid #4d7390;
+
+  color:#edf6fb;
+
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.18);
 }
   </style>
 </head>
