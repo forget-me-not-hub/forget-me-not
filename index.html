@@ -2819,7 +2819,7 @@ function setText(id, text){
 
   const hour = new Date().getHours();
 
-  if(hour >= 19 || hour < 5){
+  if(hour >= 0 || hour < 5){
     box.style.display = "block";
     document.body.classList.add("evening-mode");
   } else {
